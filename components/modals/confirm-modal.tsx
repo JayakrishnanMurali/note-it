@@ -34,7 +34,11 @@ export const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
         {children}
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
