@@ -12,10 +12,13 @@ import React, {
 } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export const Navigation = () => {
   const pathName = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const documents = useQuery(api.documents.get);
 
   const isResizingRef = useRef(false);
   const sideBarRef = useRef<ElementRef<"aside">>(null);
@@ -125,7 +128,14 @@ export const Navigation = () => {
           <UserItem />
         </div>
         <div className="mt-4">
-          <p>Documents</p>
+          {documents?.map((doc) => (
+            <div
+              key={doc._id}
+              className="flex items-center justify-between p-2"
+            >
+              <p className="text-sm">{doc.title}</p>
+            </div>
+          ))}
         </div>
 
         <div
