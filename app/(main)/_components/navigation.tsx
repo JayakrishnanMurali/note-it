@@ -22,11 +22,11 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
+import { DocumentList } from "./document-list";
 
 export const Navigation = () => {
   const pathName = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const documents = useQuery(api.documents.get);
   const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false);
@@ -152,14 +152,7 @@ export const Navigation = () => {
           <Item onClick={onCreate} label="New page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
-          {documents?.map((doc) => (
-            <div
-              key={doc._id}
-              className="flex items-center justify-between p-2"
-            >
-              <p className="text-sm">{doc.title}</p>
-            </div>
-          ))}
+          <DocumentList />
         </div>
 
         <div
