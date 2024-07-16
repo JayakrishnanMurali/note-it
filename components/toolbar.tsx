@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
+import { useCoverImage } from "@/hooks/use-cover-image";
 import { useMutation } from "convex/react";
 import { ImageIcon, SmileIcon, X } from "lucide-react";
 import { ElementRef, useRef, useState } from "react";
@@ -33,6 +34,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
   };
 
   const disableInput = () => setIsEditing(false);
+  const coverImage = useCoverImage();
 
   const onInput = (value: string) => {
     setValue(value);
@@ -105,7 +107,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             className="text-xs text-muted-foreground"
             variant="outline"
             size="sm"
-            onClick={() => {}}
+            onClick={coverImage.onOpen}
           >
             <ImageIcon className="w-4 h-4 mr-2" />
             Add cover
