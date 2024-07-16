@@ -11,9 +11,10 @@ import { useTheme } from "next-themes";
 interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
+  editable?: boolean;
 }
 
-const Editor = ({ initialContent, onChange }: EditorProps) => {
+const Editor = ({ initialContent, onChange, editable = true }: EditorProps) => {
   const { resolvedTheme } = useTheme();
   const { edgestore } = useEdgeStore();
 
@@ -33,7 +34,7 @@ const Editor = ({ initialContent, onChange }: EditorProps) => {
       editor={editor}
       theme={resolvedTheme === "dark" ? "dark" : "light"}
       onChange={() => onChange(JSON.stringify(editor.document, null, 2))}
-      editable
+      editable={editable}
     />
   );
 };

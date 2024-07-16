@@ -4,8 +4,9 @@ import { api } from "@/convex/_generated/api";
 import { useSearch } from "@/hooks/use-search";
 import { useUser } from "@clerk/clerk-react";
 import { useQuery } from "convex/react";
+import { File } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -14,7 +15,6 @@ import {
   CommandItem,
   CommandList,
 } from "./ui/command";
-import { File } from "lucide-react";
 
 export const SearchCommand = () => {
   const { user } = useUser();
@@ -44,7 +44,6 @@ export const SearchCommand = () => {
   }, [toggle]);
 
   const onSelect = (id: string) => {
-    alert("hello");
     router.push(`/documents/${id}`);
     onClose();
   };
@@ -62,7 +61,7 @@ export const SearchCommand = () => {
             <CommandItem
               key={document._id}
               title={document.title}
-              value={`${document._id}-${document.title}`}
+              value={document._id}
               onSelect={onSelect}
             >
               {document.icon ? (
