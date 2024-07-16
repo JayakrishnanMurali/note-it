@@ -3,6 +3,7 @@
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useCoverImage } from "@/hooks/use-cover-image";
+import { useEdgeStore } from "@/lib/edgestore";
 import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { ImageIcon, X } from "lucide-react";
@@ -18,8 +19,15 @@ export const Cover = ({ preview, url }: CoverImageProps) => {
   const params = useParams();
   const coverImage = useCoverImage();
   const removeCoverImage = useMutation(api.documents.removeCoverImage);
+  const { edgestore } = useEdgeStore();
 
-  const onRemoveCoverImage = () => {
+  const onRemoveCoverImage = async () => {
+    if (url) {
+      await edgestore.publicFiles.delete({
+        url,
+      });
+    }
+
     removeCoverImage({
       id: params.documentId as Id<"documents">,
     });
@@ -40,7 +48,9 @@ export const Cover = ({ preview, url }: CoverImageProps) => {
       {url && !preview && (
         <div className="opacity-0 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">
           <Button
-            onClick={coverImage.onOpen}
+            onClick={() => {
+              coverImage.onReplace(url);
+            }}
             className="text-muted-foreground text-xs"
             variant="outline"
             size="sm"
