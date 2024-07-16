@@ -1,5 +1,6 @@
 "use client";
 
+import { Publish } from "@/components/publish";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
@@ -46,6 +47,7 @@ export const NavBar = ({ isCollapsed, onResetWidth }: NavBarProps) => {
         <div className="flex items-center justify-between w-full">
           <Title initialData={document} />
           <div className="flex items-center gap-x-2">
+            <Publish initialData={document} />
             <Menu documentId={document._id} />
           </div>
         </div>
